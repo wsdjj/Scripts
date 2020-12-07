@@ -1,7 +1,9 @@
 
 /*
 更新时间: 2020-10-18 00:50
+
 腾讯新闻签到修改版，可以自动阅读文章获取红包，该活动为瓜分百万现金挑战赛，针对幸运用户参与
+
 获取Cookie方法:
 1.把以下配置复制到响应配置下
 2.打开腾讯新闻app，阅读几篇文章，倒计时结束后即可获取阅读Cookie;
@@ -15,24 +17,33 @@
 Surge 4.0
 [Script]
 腾讯新闻 = type=cron,cronexp=0 8 0 * * *,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js,script-update-interval=0
+
 腾讯新闻 = type=http-request,pattern=https:\/\/api\.inews\.qq\.com\/event\/v1\/user\/event\/report\?,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, requires-body=true
+
 ~~~~~~~~~~~~~~~~~~~~~
 Loon 2.1.0+
 [Script]
 # 本地脚本
 cron "04 00 * * *" script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, enabled=true, tag=腾讯新闻
+
 http-request https:\/\/api\.inews\.qq\.com\/event\/v1\/user\/event\/report\? script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, requires-body=true
+
 -----------------
+
 QX 1.0.7+ :
  [task_local]
 0 9 * * * https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js, tag=腾讯新闻
  [rewrite_local]
 https:\/\/api\.inews\.qq\.com\/event\/v1\/user\/event\/report\? url script-request-body https://raw.githubusercontent.com/Sunert/Scripts/master/Task/txnews.js
+
 ~~~~~~~~~~~~~~~~~~
  [MITM]
 hostname = api.inews.qq.com
+
 ---------------------------
+
 Cookie获取后，请注释掉Cookie地址。
+
 */
 const $ = new Env('腾讯新闻');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -114,11 +125,11 @@ if (isGetCookie) {
       await Pending();
     };
       await StepsTotal();
-      if(getreadred > 0){
+      if(getreadred != 0){
         redbody = `redpack_type=article&activity_id=${actid}`
         await Redpack()
       };
-      if(getvideored>0){
+      if(getvideored != 0){
         redbody = `redpack_type=video&activity_id=${actid}`
         await Redpack()
       };
@@ -323,7 +334,9 @@ function Redpack() {
       }
       $.post(cashUrl, (error, response, data) => {
         let rcash = JSON.parse(data)
+        console.log(data)
         try{
+          if(rcash.data.award.length == 1){
           redpacks = rcash.data.award.num/100
           if (rcash.ret == 0&&redpacks>0&&getreadred > 0){
             redpackres = `【阅读红包】到账`+redpacks+`元 🌷\n`
@@ -333,6 +346,9 @@ function Redpack() {
             redpackres = `【视频红包】到账`+redpacks+`元 🌷\n`
             $.log("视频红包到账"+redpacks+"元\n")
           }
+         } else {
+            $.log(rcash.data.award.length+"个红包到账\n")
+         }
         }
         catch(error){
           console.log("打开红包失败,响应数据: "+ data) 
