@@ -1,5 +1,9 @@
 /*
+
+
 聚看点极速版签到任务
+
+
 打开'我的'获取Cookie
 https:\/\/www\.xiaodouzhuan\.cn\/jkd\/newMobileMenu\/infoMe\.action url script-request-body jukan.js
 ~~~~~~~~~~~~~~~~
