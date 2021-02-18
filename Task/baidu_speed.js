@@ -15,40 +15,42 @@ const baiducks = $.getdata(`cookie_baidu`);
 let taskON = $.getdata(`task_baidu`)||"true"//除提现和兑换外其他任务开关;
 let isblack = "false";
 if ($.isNode()) {
-  if (process.env.BAIDU_COOKIE && process.env.BAIDU_COOKIE.indexOf('&') > -1) {
-  BDCookie = process.env.BAIDU_COOKIE.split('&');
-  }
- else if (process.env.BAIDU_COOKIE && process.env.BAIDU_COOKIE.indexOf('\n') > -1) {
-  BDCookie = process.env.BAIDU_COOKIE.split('\n');
-  } else {
-  BDCookie = process.env.BAIDU_COOKIE.split()
-  };
-  if (process.env.BAIDU_CASH && process.env.BAIDU_CASH.indexOf('&') > -1) {
-  BDCASH = process.env.BAIDU_CASH.split('&');
-  }
- else if (process.env.BAIDU_CASH && process.env.BAIDU_CASH.indexOf('\n') > -1) {
-  BDCASH = process.env.BAIDU_CASH.split('\n');
-  } else {
-  BDCASH = process.env.BAIDU_CASH.split()
-  }
+//   if (process.env.BAIDU_COOKIE && process.env.BAIDU_COOKIE.indexOf('&') > -1) {
+//   BDCookie = process.env.BAIDU_COOKIE.split('&');
+//   }
+//  else if (process.env.BAIDU_COOKIE && process.env.BAIDU_COOKIE.indexOf('\n') > -1) {
+//   BDCookie = process.env.BAIDU_COOKIE.split('\n');
+//   } else {
+//   BDCookie = process.env.BAIDU_COOKIE.split()
+//   };
+//   if (process.env.BAIDU_CASH && process.env.BAIDU_CASH.indexOf('&') > -1) {
+//   BDCASH = process.env.BAIDU_CASH.split('&');
+//   }
+//  else if (process.env.BAIDU_CASH && process.env.BAIDU_CASH.indexOf('\n') > -1) {
+//   BDCASH = process.env.BAIDU_CASH.split('\n');
+//   } else {
+//   BDCASH = process.env.BAIDU_CASH.split()
+//   }
 
-  Object.keys(BDCookie).forEach((item) => {
-        if (BDCookie[item]) {
-          CookieArr.push(BDCookie[item])
-        } 
-    });
-  Object.keys(BDCASH).forEach((item) => {
-        if (BDCASH[item]) {
-          cashArr.push(BDCASH[item])
-        } 
-    })
-} else if(baiducks && baiducks.indexOf('&')>-1){
-     BDCookie = baiducks.split("&")
-     Object.keys(BDCookie).forEach((item) => {
-     if (BDCookie[item]) {
-          CookieArr.push(BDCookie[item])
-        } 
-    })
+//   Object.keys(BDCookie).forEach((item) => {
+//         if (BDCookie[item]) {
+//           CookieArr.push(BDCookie[item])
+//         } 
+//     });
+//   Object.keys(BDCASH).forEach((item) => {
+//         if (BDCASH[item]) {
+//           cashArr.push(BDCASH[item])
+//         } 
+//     })
+// } else if(baiducks && baiducks.indexOf('&')>-1){
+//      BDCookie = baiducks.split("&")
+//      Object.keys(BDCookie).forEach((item) => {
+//      if (BDCookie[item]) {
+//           CookieArr.push(BDCookie[item])
+//         } 
+//     })
+      CookieArr.push('SG_FW_VER=1.26.3; SP_FW_VER=3.230.34; BAIDUCUID=0avcu_a8vt_f8H8Pli2Qi0umSflqaviPl8-6iliZSijPPBtq_aHlfYivQO0otWaB9J-mA; BAIDUZID=HuYR4M0XmcF89pvv0ne1g2bVmpeHDfQOFXeGmQR4Wflq3bURNBX12y7PioccVmTSeodGhlZBwWjTMuAjgeEC62Q; BDUSS=FsTElJakVWWUhxNEVXaXZqMk5FVFZqWlNKeDc5RWN5OGt5SFV3dWQ0WUJYaHRnSVFBQUFBJCQAAAAAAAAAAAEAAADP8ttuNFQ1NFQ1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHR818B0fNfT1; CUID=D616C353838BF7745A9D233B784876B0; TBBRAND=iPhone; _client_version=12.1.2; BAIDUID=9BC64D007ED9BFE590A919EDCB6A3810:FG=1')
+
 } else {
     CookieArr.push($.getdata(`chavy_cookie_tieba`) || $.getdata(`CookieTB`));
     cashArr.push($.getdata("cash_baidu")||30)
