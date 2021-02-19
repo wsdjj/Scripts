@@ -1,6 +1,5 @@
 /*
 更新时间: 2020-10-13 21:25
-
 本脚本仅适用于微博每日签到，支持Actions多账号运行  
 获取Cookie方法:
 1.将下方[rewrite_local]和[MITM]地址复制的相应的区域下
@@ -8,40 +7,30 @@
 3.打开微博钱包点击签到，获取Cookie，
 4.钱包签到时获取Cookie,已经签到无法获取
 5.非专业人士制作，欢迎各位大佬提出宝贵意见和指导
-
 by Macsuny
 ~~~~~~~~~~~~~~~~
 Surge 4.0 :
 [Script]
 weibo.js = type=cron,cronexp=35 5 0 * * *,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js,script-update-interval=0
-
 # 获取微博 Cookie.
 weibo.js = type=http-request,pattern=https:\/\/api\.weibo\.cn\/\d\/page\/\w+\?gsid,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
 # 微博钱包签到Cookie
 weibo.js = type=http-request,pattern=https:\/\/pay\.sc\.weibo\.com\/aj\/mobile\/home\/welfare\/signin\/do\?,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
-
 ~~~~~~~~~~~~~~~~
 Loon 2.1.0+
 [Script]
 # 本地脚本
 cron "04 00 * * *" script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js, enabled=true, tag=新浪微博
-
 http-request https:\/\/api\.weibo\.cn\/\d\/page\/\w+\?gsid script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
-
 http-request https:\/\/pay\.sc\.weibo\.com\/aj\/mobile\/home\/welfare\/signin\/do\? script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
-
 -----------------
-
 QX 1.0.6+ :
 [task_local]
 0 9 * * * https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
-
 [rewrite_local]
 https:\/\/api\.weibo\.cn\/\d\/page\/\w+\?gsid url script-request-header https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
-
 # 钱包签到Cookie
 https:\/\/pay\.sc\.weibo\.com\/aj\/mobile\/home\/welfare\/signin\/do\? url script-request-header https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js
-
 ~~~~~~~~~~~~~~~~
 [MITM]
 hostname = api.weibo.cn, pay.sc.weibo.com
@@ -172,6 +161,7 @@ function doCard() {
      let result = JSON.parse(data)
       if (result.status ==10000){
        nickname = "昵称: "+result.data.user.nickname
+       $.setdata(nickname,'wb_nick')
        signday = result.data.signin.title.split('<')[0]
        docard = `【每日打卡】 ✅ `+ signday+'天 积分总计: '+result.data.user.energy
        }
